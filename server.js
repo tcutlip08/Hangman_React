@@ -29,8 +29,6 @@ connection.on("error", err => {
   console.log("Mongoose default connection error: " + err);
 });
 
-app.use("/api/register", RegisterController);
-
 app.use(express.static(__dirname + "/client/build"));
 
 app.get("*", (req, res) => {
