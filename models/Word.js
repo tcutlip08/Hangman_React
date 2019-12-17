@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 // Save a reference to the Schema constructor
 var Schema = mongoose.Schema;
 
-var WordsSchema = new Schema({
+var WordSchema = new Schema({
   word: { type: String, required: true },
   length: { type: Number, required: true },
   spaces: { type: Boolean, required: true },
@@ -12,7 +12,7 @@ var WordsSchema = new Schema({
 });
 
 // This creates our model from the above schema, using mongoose's model method
-const Words = mongoose.model("Words", WordsSchema);
+const Word = mongoose.model("Word", WordSchema);
 
 // Export the Article model
-module.exports = Words;
+module.exports = Word;

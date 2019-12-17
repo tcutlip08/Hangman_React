@@ -1,40 +1,27 @@
-require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const path = require("path");
-const CarsController = require("./controllers/words");
-
+const routes = require("./routes");
+const app = express();
 const PORT = process.env.PORT || 3001;
 
-const db = require("./models");
-
-const app = express();
-
+// Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+// Add routes, both API and view
+app.use(routes);
 
-// mongoose.set("useFindAndModify", false);
-// mongoose.set("useCreateIndex", true);
-mongoose.connect(process.env.MONGODB_URI, {
+// Connect to the Mongo DB
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/hangman", {
+  useUnifiedTopology: true,
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useCreateIndex: true
 });
 
-const connection = mongoose.connection;
-
-connection.on("connected", () => {
-  console.log("Mongoose connected successfully");
-});
-connection.on("error", err => {
-  console.log("Mongoose default connection error: " + err);
-});
-
-app.use(express.static(__dirname + "/client/build"));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build/index.html"));
-});
-
+// Start the API server
 app.listen(PORT, function() {
-  console.log(`App is running on http://localhost:${PORT}`);
+  console.log(`🌎==> API Server now listening on PORT ${PORT}!`);
 });

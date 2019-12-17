@@ -6,10 +6,10 @@ const data = require("./video.json");
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/hangman");
 
-const wordsSeed = data;
+const wordSeed = data;
 
-db.Words.remove({})
-  .then(() => db.Words.collection.insertMany(wordsSeed))
+db.Word.remove({})
+  .then(() => db.Word.collection.insertMany(wordSeed))
   .then(data => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);

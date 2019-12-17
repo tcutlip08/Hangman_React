@@ -18,7 +18,7 @@
     "video": "https://www.youtube.com/embed/OS-zksmQx44"
   },
   {
-    "word": "Korn",
+    "word": "KoRn",
     "length": 4,
     "spaces": false,
     "video": "https://www.youtube.com/embed/emNahB_96JY"
@@ -48,8 +48,8 @@
     "video": "https://www.youtube.com/embed/sBk0eQ3V4MM"
   },
   {
-    "word": "Acdc",
-    "length": 4,
+    "word": "AC/DC",
+    "length": 5,
     "spaces": false,
     "video": "https://www.youtube.com/embed/VcByktP-mdE"
   },
@@ -58,5 +58,11 @@
     "length": 8,
     "spaces": false,
     "video": "https://www.youtube.com/embed/3GWwohI5h1w"
+  },
+  {
+    "word": "Avenged Sevenfold",
+    "length": 17,
+    "spaces": true,
+    "video": "https://www.youtube.com/embed/Lt5EM0eLkXw"
   }
 ]
