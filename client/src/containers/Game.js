@@ -21,7 +21,7 @@ class Game extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.wrongGuess);
+    // console.log(this.state.wrongGuess);
   }
 
   componentWillUnmount() {
@@ -51,6 +51,7 @@ class Game extends Component {
     } else {
       array.push(key);
       this.setState({ wrongGuess: this.state.wrongGuess + 1 });
+      // console.log(this.state.wrongGuess);
     }
     this.checkWinOrLose();
   }
@@ -179,6 +180,10 @@ class Game extends Component {
               >
                 Reset (Esc)
               </button>
+              <div className="guessedLeft">
+                Guesses Left:&nbsp;
+                {this.state.wrongGuess ? 10 - this.state.wrongGuess : "0"}
+              </div>
             </div>
           </div>
         </div>
