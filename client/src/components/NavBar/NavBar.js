@@ -18,7 +18,19 @@ const NavBar = props => {
       <div className="col-sm-6">
         <img src={metalhead} alt="Metal Img" />
       </div>
-      <div className="col-sm-3"></div>
+      <div className="col-sm-3">
+        <Link
+          to="/input"
+          className="navbar-brand"
+          style={{
+            color: "white",
+            fontFamily: "Nova Round",
+            textAlign: "right"
+          }}
+        >
+          Input Word
+        </Link>
+      </div>
     </nav>
   );
 };

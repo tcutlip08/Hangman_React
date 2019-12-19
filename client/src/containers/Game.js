@@ -10,7 +10,9 @@ class Game extends Component {
     unfinishedWord: [],
     alphabet: "abcdefghijklmnopqrstuvwxyz",
     numbers: "0123456789",
-    alreadyGuessed: []
+    lastSuccessfulGuessed: {},
+    alreadyGuessed: [],
+    wrongGuess: 0
   };
 
   componentDidMount() {
@@ -18,7 +20,9 @@ class Game extends Component {
     document.addEventListener("keydown", this.onKeyDown);
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    console.log(this.state.wrongGuess);
+  }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.onKeyDown);
@@ -35,7 +39,51 @@ class Game extends Component {
     }
   };
 
-  testKeyPressed(key) {}
+  testKeyPressed(key) {
+    let array = this.state.alreadyGuessed;
+    if (this.state.alreadyGuessed.includes(key)) {
+      console.log("Dupp Guess");
+    } else if (this.state.word.word.toLowerCase().includes(key)) {
+      this.updateUnfinishedWord(key);
+      array.push(key);
+      this.setState({ alreadyGuessed: array });
+      console.log("Correct Guess");
+    } else {
+      array.push(key);
+      this.setState({ wrongGuess: this.state.wrongGuess + 1 });
+    }
+    this.checkWinOrLose();
+  }
+
+  checkWinOrLose() {
+    if (!this.state.unfinishedWord.includes("-")) {
+      console.log("You Win!!");
+      this.playVideo();
+      setTimeout(() => {
+        this.resetGame();
+      }, 3000);
+    } else if (this.state.wrongGuess >= 10) {
+      console.log("You Lose :(");
+      setTimeout(() => {
+        this.resetGame();
+      }, 3000);
+    }
+  }
+
+  playVideo() {
+    this.setState({ lastSuccessfulGuessed: this.state.word });
+  }
+
+  updateUnfinishedWord(key) {
+    const word = this.state.word.word.toLowerCase();
+    let unfWord = this.state.unfinishedWord;
+    for (let i = 0; i < word.length; i++) {
+      if (key === word[i]) {
+        unfWord[i] = this.state.word.word[i];
+        this.setState({ unfinishedWord: unfWord });
+      }
+    }
+  }
 
   alertUser() {
     console.log("Alertttt!!!");
@@ -43,6 +91,7 @@ class Game extends Component {
   }
 
   resetGame() {
+    this.setState({ alreadyGuessed: [], wrongGuess: 0 });
     this.getRandomWord();
   }
 
@@ -94,18 +143,41 @@ class Game extends Component {
           style={{ textAlign: "center", margin: "auto" }}
         >
           <div className="row" style={{ paddingTop: "2em" }}>
-            <div className="col-sm-4" id="unfinishedWord">
-              {this.state.unfinishedWord
-                ? this.state.unfinishedWord.join("")
-                : "Please Wait a Fuckin Second"}
+            <div className="col-sm-4">
+              <div id="unfinishedWord">
+                {this.state.unfinishedWord
+                  ? this.state.unfinishedWord.join("")
+                  : "Please Wait a Fuckin Second"}
+              </div>
+              <div id="alreadyGuessed">
+                <strong>Guessed:</strong>&nbsp;
+                {this.state.alreadyGuessed[0]
+                  ? this.state.alreadyGuessed.join(", ")
+                  : "Press a button. I dare ya"}
+              </div>
             </div>
-            <div className="col-md-4"></div>
+            <div className="col-md-4">
+              <iframe
+                id={
+                  this.state.lastSuccessfulGuessed
+                    ? this.state.lastSuccessfulGuessed.name
+                    : "Band Name"
+                }
+                src={
+                  this.state.lastSuccessfulGuessed
+                    ? this.state.lastSuccessfulGuessed.video
+                    : ""
+                }
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+              ></iframe>
+            </div>
             <div className="col-sm-4">
               <button
                 className="btn btn-danger"
                 onClick={() => this.alertUser()}
               >
-                Reset
+                Reset (Esc)
               </button>
             </div>
           </div>
