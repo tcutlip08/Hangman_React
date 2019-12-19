@@ -4,13 +4,46 @@ import "./Styling/Game.css";
 import axios from "axios";
 
 class Game extends Component {
-  state = { wordArray: [], word: {}, unfinishedWord: [] };
+  state = {
+    wordArray: [],
+    word: {},
+    unfinishedWord: [],
+    alphabet: "abcdefghijklmnopqrstuvwxyz",
+    numbers: "0123456789",
+    alreadyGuessed: []
+  };
+
   componentDidMount() {
-    this.getRandomWord();
+    this.resetGame();
+    document.addEventListener("keydown", this.onKeyDown);
   }
 
-  componentDidUpdate() {
-    console.log(this.state.unfinishedWord);
+  componentDidUpdate() {}
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.onKeyDown);
+  }
+
+  onKeyDown = event => {
+    if (event.key === "Escape") {
+      this.alertUser();
+    } else if (
+      this.state.alphabet.includes(event.key.toLowerCase()) ||
+      this.state.numbers.includes(event.key.toLowerCase())
+    ) {
+      this.testKeyPressed(event.key.toLowerCase());
+    }
+  };
+
+  testKeyPressed(key) {}
+
+  alertUser() {
+    console.log("Alertttt!!!");
+    this.resetGame();
+  }
+
+  resetGame() {
+    this.getRandomWord();
   }
 
   getRandomWord() {
@@ -28,19 +61,15 @@ class Game extends Component {
 
   setUnfinishedWord() {
     let wordArray = [];
-    let alphabet = "abcdefghijklmnopqrstuvwxyz";
     for (let i = 0; i < this.state.word.length; i++) {
-      // Push Spaces
       if (this.state.word.word[i] === " ") {
         wordArray.push(" ");
-      }
-      // Push Special Characters
-      else if (!alphabet.includes(this.state.word.word[i].toLowerCase())) {
+      } else if (
+        !this.state.alphabet.includes(this.state.word.word[i].toLowerCase())
+      ) {
         wordArray.push(this.state.word.word[i]);
-      }
-      // Push Underscore for each letter
-      else {
-        wordArray.push("_");
+      } else {
+        wordArray.push("-");
       }
     }
     this.setState({ unfinishedWord: wordArray });
@@ -56,18 +85,30 @@ class Game extends Component {
         console.log(err);
       });
   }
+
   render() {
     return (
       <div className="container">
         <div
           className="jumbotron"
           style={{ textAlign: "center", margin: "auto" }}
-        ></div>
-
-        <div className="row" style={{ paddingTop: "2em" }}>
-          <div className="col-sm-5"></div>
-          <div className="col-md-2"></div>
-          <div className="col-sm-5"></div>
+        >
+          <div className="row" style={{ paddingTop: "2em" }}>
+            <div className="col-sm-4" id="unfinishedWord">
+              {this.state.unfinishedWord
+                ? this.state.unfinishedWord.join("")
+                : "Please Wait a Fuckin Second"}
+            </div>
+            <div className="col-md-4"></div>
+            <div className="col-sm-4">
+              <button
+                className="btn btn-danger"
+                onClick={() => this.alertUser()}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
