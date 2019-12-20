@@ -8,7 +8,9 @@ class Home extends Component {
         <div
           className="jumbotron"
           style={{ textAlign: "center", margin: "auto" }}
-        ></div>
+        >
+          Instructions/Introduction
+        </div>
 
         <div className="row" style={{ paddingTop: "2em" }}>
           <div className="col-sm-5"></div>

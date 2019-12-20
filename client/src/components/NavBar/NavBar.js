@@ -25,10 +25,10 @@ const NavBar = props => {
           style={{
             color: "white",
             fontFamily: "Nova Round",
-            textAlign: "right"
+            float: "right"
           }}
         >
-          Input Word
+          Add Band
         </Link>
       </div>
     </nav>

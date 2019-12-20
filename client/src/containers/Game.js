@@ -92,8 +92,8 @@ class Game extends Component {
   }
 
   resetGame() {
-    this.setState({ alreadyGuessed: [], wrongGuess: 0 });
     this.getRandomWord();
+    this.setState({ alreadyGuessed: [], wrongGuess: 0 });
   }
 
   getRandomWord() {
@@ -115,7 +115,8 @@ class Game extends Component {
       if (this.state.word.word[i] === " ") {
         wordArray.push(" ");
       } else if (
-        !this.state.alphabet.includes(this.state.word.word[i].toLowerCase())
+        !this.state.alphabet.includes(this.state.word.word[i].toLowerCase()) &&
+        !this.state.numbers.includes(this.state.word.word[i])
       ) {
         wordArray.push(this.state.word.word[i]);
       } else {
@@ -182,7 +183,7 @@ class Game extends Component {
               </button>
               <div className="guessedLeft">
                 Guesses Left:&nbsp;
-                {this.state.wrongGuess ? 10 - this.state.wrongGuess : "0"}
+                {this.state.word.word ? 10 - this.state.wrongGuess : "0"}
               </div>
             </div>
           </div>

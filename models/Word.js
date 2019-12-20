@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var WordSchema = new Schema({
-  word: { type: String, required: true },
+  word: { type: String, required: true, unique: true },
   length: { type: Number, required: true },
   spaces: { type: Boolean, required: true },
   // specChar: { type: Boolean, required: true },
