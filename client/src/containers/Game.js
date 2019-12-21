@@ -47,7 +47,6 @@ class Game extends Component {
   };
 
   testKeyPressed(key) {
-    console.log(key);
     let array = this.state.alreadyGuessed;
     if (this.state.alreadyGuessed.includes(key)) {
       console.log("Dupp Guess");
@@ -192,7 +191,7 @@ class Game extends Component {
             </div>
           </div>
         </div>
-        <KeyBoard />
+        {/* <KeyBoard /> */}
       </div>
     );
   }

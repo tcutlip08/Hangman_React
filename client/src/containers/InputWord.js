@@ -57,11 +57,11 @@ class InputWord extends Component {
               className="jumbotron"
               style={{ textAlign: "center", margin: "auto" }}
             >
-              <span>
+              {/* <span>
                 Five Finger Death Punch
                 <br />
                 https://www.youtube.com/embed/NeWntx-z8F4
-              </span>
+              </span> */}
               <form onSubmit={this.submitNew}>
                 <div className="input-group mb-3">
                   <input
