@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 // import { Link } from "react-router-dom";
 import "./Styling/Game.css";
+import KeyBoard from "../components/KeyBoard/KeyBoard";
 import axios from "axios";
 
 class Game extends Component {
@@ -18,6 +19,7 @@ class Game extends Component {
   componentDidMount() {
     this.resetGame();
     document.addEventListener("keydown", this.onKeyDown);
+    document.addEventListener("click", this.onClick);
   }
 
   componentDidUpdate() {
@@ -26,7 +28,12 @@ class Game extends Component {
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.onKeyDown);
+    document.removeEventListener("click", this.onClick);
   }
+
+  onClick = event => {
+    // console.log(event.path);
+  };
 
   onKeyDown = event => {
     if (event.key === "Escape") {
@@ -40,6 +47,7 @@ class Game extends Component {
   };
 
   testKeyPressed(key) {
+    console.log(key);
     let array = this.state.alreadyGuessed;
     if (this.state.alreadyGuessed.includes(key)) {
       console.log("Dupp Guess");
@@ -159,20 +167,16 @@ class Game extends Component {
               </div>
             </div>
             <div className="col-md-4">
-              <iframe
-                id={
-                  this.state.lastSuccessfulGuessed
-                    ? this.state.lastSuccessfulGuessed.name
-                    : "Band Name"
-                }
-                src={
-                  this.state.lastSuccessfulGuessed
-                    ? this.state.lastSuccessfulGuessed.video
-                    : ""
-                }
-                frameborder="0"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-              ></iframe>
+              {this.state.lastSuccessfulGuessed ? (
+                <iframe
+                  id={this.state.lastSuccessfulGuessed.name}
+                  src={this.state.lastSuccessfulGuessed.video}
+                  frameborder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                ></iframe>
+              ) : (
+                ""
+              )}
             </div>
             <div className="col-sm-4">
               <button
@@ -188,6 +192,7 @@ class Game extends Component {
             </div>
           </div>
         </div>
+        <KeyBoard />
       </div>
     );
   }
