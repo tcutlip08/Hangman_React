@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "./Styling/Game.css";
+import "./Styling/InputWord.css";
 
 class InputWord extends Component {
-  state = { band: "", video: "", spaces: false };
+  state = { band: "", video: "", spaces: false, displayInstructions: true };
 
   componentDidUpdate() {}
 
@@ -51,8 +51,8 @@ class InputWord extends Component {
     this.checkForSpaces(this.state.band);
   };
 
-  instructionsForVideo() {
-    console.log("fuck");
+  toggleInstructionsForVideo() {
+    this.setState({ displayInstructions: !this.state.displayInstructions });
   }
 
   render() {
@@ -97,7 +97,7 @@ class InputWord extends Component {
                       <a
                         href="#"
                         className="instructions"
-                        onClick={() => this.instructionsForVideo()}
+                        onClick={() => this.toggleInstructionsForVideo()}
                       >
                         Important
                       </a>
@@ -110,9 +110,13 @@ class InputWord extends Component {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col">Instructions</div>
-        </div>
+        {this.state.displayInstructions ? (
+          <div className="row">
+            <div className="col">Instructions</div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     );
   }
