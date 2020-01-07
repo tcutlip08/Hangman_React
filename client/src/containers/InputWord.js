@@ -1,30 +1,33 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "./Styling/Game.css";
 
 class InputWord extends Component {
   state = { band: "", video: "", spaces: false };
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
+  componentDidUpdate() {}
 
   submitNew = event => {
     event.preventDefault();
     if (this.state.band && this.state.video) {
-      axios
-        .post("/api/word", {
-          word: this.state.band,
-          video: this.state.video,
-          length: this.state.band.length,
-          spaces: this.state.spaces
-        })
-        .then(res => {
-          console.log(res);
-          this.setState({ band: "", video: "", spaces: false });
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      if (this.state.video.includes("https://www.youtube.com/embed/")) {
+        axios
+          .post("/api/word", {
+            word: this.state.band,
+            video: this.state.video,
+            length: this.state.band.length,
+            spaces: this.state.spaces
+          })
+          .then(res => {
+            console.log(res);
+            this.setState({ band: "", video: "", spaces: false });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        console.log("Input correct link format");
+      }
     } else {
       console.log("Finsih the form fucker");
     }
@@ -48,6 +51,10 @@ class InputWord extends Component {
     this.checkForSpaces(this.state.band);
   };
 
+  instructionsForVideo() {
+    console.log("fuck");
+  }
+
   render() {
     return (
       <div className="container">
@@ -57,11 +64,6 @@ class InputWord extends Component {
               className="jumbotron"
               style={{ textAlign: "center", margin: "auto" }}
             >
-              {/* <span>
-                Five Finger Death Punch
-                <br />
-                https://www.youtube.com/embed/NeWntx-z8F4
-              </span> */}
               <form onSubmit={this.submitNew}>
                 <div className="input-group mb-3">
                   <input
@@ -91,7 +93,15 @@ class InputWord extends Component {
                   />
                   <div className="input-group-prepend">
                     <span className="input-group-text" id="basic-addon1">
-                      Video
+                      Video(
+                      <a
+                        href="#"
+                        className="instructions"
+                        onClick={() => this.instructionsForVideo()}
+                      >
+                        Important
+                      </a>
+                      )
                     </span>
                   </div>
                 </div>
@@ -99,6 +109,9 @@ class InputWord extends Component {
               </form>
             </div>
           </div>
+        </div>
+        <div className="row">
+          <div className="col">Instructions</div>
         </div>
       </div>
     );

@@ -191,7 +191,11 @@ class Game extends Component {
             </div>
           </div>
         </div>
-        {/* <KeyBoard /> */}
+        <KeyBoard
+          ref={ref => {
+            this.myInput = ref;
+          }}
+        />
       </div>
     );
   }

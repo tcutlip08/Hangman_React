@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import KeyboardedInput from "react-touch-screen-keyboard";
+import "react-touch-screen-keyboard/lib/Keyboard.css";
 
 class KeyBoard extends Component {
   render() {
@@ -15,6 +16,9 @@ class KeyBoard extends Component {
         value={this.props.value}
         name={this.props.name}
         defaultKeyboard={CustomMapping}
+        onClick={() => {
+          this.myInput.focus();
+        }}
       />
     );
   }
